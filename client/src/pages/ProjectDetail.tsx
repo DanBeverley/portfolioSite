@@ -51,12 +51,15 @@ export default function ProjectDetail() {
 
         <div className="flex flex-wrap gap-3 mb-12">
           {project.tags?.map((tag, i) => (
-            <span 
+            <a 
               key={i} 
-              className="px-3 py-1 bg-secondary/50 text-secondary-foreground text-sm font-medium rounded-full"
+              href={tag.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tag-pop px-3 py-1 bg-secondary/50 text-secondary-foreground text-sm font-medium rounded-full hover:bg-primary hover:text-background transition-all"
             >
-              {tag}
-            </span>
+              {tag.name}
+            </a>
           ))}
         </div>
 
@@ -115,7 +118,11 @@ export default function ProjectDetail() {
               <h3 className="font-bold mb-2">Tech Stack</h3>
               <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                 {project.tags?.map((tag) => (
-                  <li key={tag}>{tag}</li>
+                  <li key={tag.name}>
+                    <a href={tag.url} target="_blank" rel="noopener noreferrer" className="hover:text-primary underline-offset-2 hover:underline">
+                      {tag.name}
+                    </a>
+                  </li>
                 ))}
               </ul>
             </div>

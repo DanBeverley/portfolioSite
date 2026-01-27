@@ -43,8 +43,8 @@ export function Navigation() {
             {user ? (
               <div className="flex items-center gap-4 pl-4 border-l border-border">
                 <Link href="/admin">
-                  <Button variant="ghost" size="sm" className="font-medium">
-                    Admin
+                  <Button variant="ghost" size="sm" className="font-bold border border-primary/20 hover:bg-primary hover:text-background transition-all duration-300 button-pop-reverse">
+                    Upload Work
                   </Button>
                 </Link>
                 <Button 
@@ -52,14 +52,15 @@ export function Navigation() {
                   size="icon" 
                   onClick={() => logout()}
                   title="Logout"
-                  className="rounded-full w-8 h-8"
+                  className="rounded-full w-8 h-8 hover:bg-destructive hover:text-destructive-foreground transition-all button-pop-reverse"
                 >
                   <LogOut className="h-4 w-4" />
                 </Button>
               </div>
             ) : (
-              <a href="/api/login" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                <User className="w-5 h-5" />
+              <a href="/api/login" className="flex items-center gap-2 text-sm font-bold text-primary px-6 py-2 border-2 border-primary rounded-full hover:bg-primary hover:text-background transition-all duration-300 button-pop-reverse">
+                <span>Admin Login</span>
+                <User className="w-4 h-4" />
               </a>
             )}
           </div>

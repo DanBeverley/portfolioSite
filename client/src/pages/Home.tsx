@@ -35,10 +35,10 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <Button size="lg" className="rounded-full px-8 h-12 text-base" onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}>
+            <Button size="lg" className="rounded-full px-8 h-12 text-base button-pop-reverse" onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}>
               View Selected Work
             </Button>
-            <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base">
+            <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base button-pop-reverse">
               Contact Me
             </Button>
           </motion.div>

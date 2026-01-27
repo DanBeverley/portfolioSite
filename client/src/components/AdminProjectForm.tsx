@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertProjectSchema, type InsertProject, type Project } from "@shared/schema";
 import { Button } from "@/components/ui/button";
@@ -13,15 +13,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import { z } from "zod";
-
-// Extend schema to handle array transformation
-const formSchema = insertProjectSchema.extend({
-  tagsString: z.string().optional(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 
 interface AdminProjectFormProps {
   initialData?: Project;
@@ -30,29 +23,25 @@ interface AdminProjectFormProps {
 }
 
 export function AdminProjectForm({ initialData, onSubmit, isSubmitting }: AdminProjectFormProps) {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<InsertProject>({
+    resolver: zodResolver(insertProjectSchema),
     defaultValues: {
       title: initialData?.title || "",
       description: initialData?.description || "",
       imageUrl: initialData?.imageUrl || "",
       projectUrl: initialData?.projectUrl || "",
       repoUrl: initialData?.repoUrl || "",
-      tagsString: initialData?.tags?.join(", ") || "",
+      tags: initialData?.tags || [{ name: "", url: "" }],
     },
   });
 
-  const handleSubmit = (values: FormValues) => {
-    // Transform comma-separated string back to array
-    const tags = values.tagsString
-      ?.split(",")
-      .map((t) => t.trim())
-      .filter(Boolean) || [];
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "tags",
+  });
 
-    onSubmit({
-      ...values,
-      tags,
-    });
+  const handleSubmit = (values: InsertProject) => {
+    onSubmit(values);
   };
 
   return (
@@ -137,19 +126,61 @@ export function AdminProjectForm({ initialData, onSubmit, isSubmitting }: AdminP
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="tagsString"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tags</FormLabel>
-              <FormControl>
-                <Input placeholder="React, TypeScript, AI, Python (comma separated)" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <FormLabel>Tools & Documentation Tags</FormLabel>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => append({ name: "", url: "" })}
+              className="h-8"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Tag
+            </Button>
+          </div>
+          <div className="space-y-3">
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex gap-2 items-start">
+                <FormField
+                  control={form.control}
+                  name={`tags.${index}.name`}
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormControl>
+                        <Input placeholder="Tag Name (e.g. React)" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`tags.${index}.url`}
+                  render={({ field }) => (
+                    <FormItem className="flex-[2]">
+                      <FormControl>
+                        <Input placeholder="Documentation URL (https://...)" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => remove(index)}
+                  disabled={fields.length === 1}
+                  className="h-9 w-9 text-destructive"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="flex justify-end pt-4">
           <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto min-w-[150px]">

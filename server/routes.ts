@@ -86,7 +86,11 @@ export async function registerRoutes(
       imageUrl: "https://images.unsplash.com/photo-1617791160505-6f00504e3519?auto=format&fit=crop&q=80&w=1000",
       projectUrl: "https://example.com",
       repoUrl: "https://github.com",
-      tags: ["Python", "PyTorch", "React", "FastAPI"],
+      tags: [
+        { name: "Python", url: "https://www.python.org/" },
+        { name: "PyTorch", url: "https://pytorch.org/" },
+        { name: "React", url: "https://react.dev/" }
+      ],
     });
     await storage.createProject({
       title: "Neural Network Visualizer",
@@ -94,7 +98,10 @@ export async function registerRoutes(
       imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000",
       projectUrl: "https://example.com",
       repoUrl: "https://github.com",
-      tags: ["Three.js", "TypeScript", "WebGL"],
+      tags: [
+        { name: "Three.js", url: "https://threejs.org/" },
+        { name: "TypeScript", url: "https://www.typescriptlang.org/" }
+      ],
     });
     await storage.createProject({
       title: "Autonomous Drone Swarm",
@@ -102,7 +109,10 @@ export async function registerRoutes(
       imageUrl: "https://images.unsplash.com/photo-1508614589041-895b8c9d7ef5?auto=format&fit=crop&q=80&w=1000",
       projectUrl: "https://example.com",
       repoUrl: "https://github.com",
-      tags: ["C++", "ROS", "Computer Vision"],
+      tags: [
+        { name: "C++", url: "https://isocpp.org/" },
+        { name: "ROS", url: "https://www.ros.org/" }
+      ],
     });
     console.log("Database seeded!");
   }

@@ -44,9 +44,16 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           </p>
           <div className="flex flex-wrap gap-2 pt-2">
             {project.tags?.slice(0, 3).map((tag, i) => (
-              <span key={i} className="text-[10px] uppercase tracking-wider px-2 py-1 bg-secondary text-secondary-foreground rounded-sm font-medium">
-                {tag}
-              </span>
+              <a
+                key={i}
+                href={tag.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="tag-pop text-[10px] uppercase tracking-wider px-2 py-1 bg-secondary text-secondary-foreground rounded-sm font-medium hover:bg-primary hover:text-background transition-all"
+              >
+                {tag.name}
+              </a>
             ))}
           </div>
         </div>

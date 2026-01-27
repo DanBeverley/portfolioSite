@@ -83,3 +83,21 @@ html {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
 }
+
+/* Custom Button Hover Effect */
+.button-pop-reverse {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.button-pop-reverse:hover {
+  transform: translateY(-4px);
+  @apply bg-foreground text-background shadow-lg;
+}
+
+/* Tag Hover Pop-up */
+.tag-pop {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tag-pop:hover {
+  transform: scale(1.1) translateY(-2px);
+  @apply shadow-md z-10;
+}
