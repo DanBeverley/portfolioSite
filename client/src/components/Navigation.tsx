@@ -11,6 +11,7 @@ export function Navigation() {
   const links = [
     { href: "/", label: "Work" },
     { href: "/about", label: "About" },
+    { href: "/resume", label: "Resume" },
   ];
 
   return (

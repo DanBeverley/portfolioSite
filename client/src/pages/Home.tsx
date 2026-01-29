@@ -2,7 +2,7 @@ import { useProjects } from "@/hooks/use-projects";
 import { Navigation } from "@/components/Navigation";
 import { ProjectCard } from "@/components/ProjectCard";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail, Linkedin, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -35,10 +35,10 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <Button size="lg" className="rounded-full px-8 h-12 text-base button-pop-reverse" onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}>
+            <Button size="lg" className="rounded-full px-8 h-12 text-base button-pop-reverse" onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}>
               View Selected Work
             </Button>
-            <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base button-pop-reverse">
+            <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base button-pop-reverse" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
               Contact Me
             </Button>
           </motion.div>
@@ -69,6 +69,70 @@ export default function Home() {
             )}
           </div>
         )}
+      </section>
+
+      {/* Contact Section */}
+      <section className="px-4 py-32 bg-secondary/20" id="contact">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-display font-bold mb-4">Get In Touch</h2>
+            <p className="text-muted-foreground">
+              Have a question or want to work together? Drop me a message below.
+            </p>
+          </motion.div>
+
+          <div className="bg-background p-8 md:p-12 rounded-2xl border border-border shadow-sm">
+            <form className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Name</label>
+                  <input 
+                    type="text" 
+                    className="w-full px-4 py-3 rounded-md border border-border bg-muted/30 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Email</label>
+                  <input 
+                    type="email" 
+                    className="w-full px-4 py-3 rounded-md border border-border bg-muted/30 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    placeholder="john@example.com"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Message</label>
+                <textarea 
+                  rows={5}
+                  className="w-full px-4 py-3 rounded-md border border-border bg-muted/30 focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                  placeholder="Your message here..."
+                ></textarea>
+              </div>
+              <Button size="lg" className="w-full button-pop-reverse">
+                Send Message
+              </Button>
+            </form>
+
+            <div className="mt-12 pt-12 border-t border-border flex flex-wrap justify-center gap-8">
+              {[
+                { name: 'Email', href: 'mailto:hello@portfolio.ai', icon: Mail },
+                { name: 'LinkedIn', href: '#', icon: Linkedin },
+                { name: 'GitHub', href: '#', icon: Github }
+              ].map(social => (
+                <a key={social.name} href={social.href} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium">
+                  <social.icon className="w-4 h-4" />
+                  {social.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       <footer className="bg-foreground text-background py-12">

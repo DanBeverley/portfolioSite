@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import ProjectDetail from "@/pages/ProjectDetail";
+import Resume from "@/pages/Resume";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import CreateProject from "@/pages/admin/CreateProject";
 import EditProject from "@/pages/admin/EditProject";
@@ -17,6 +18,7 @@ function Router() {
       {/* Public Routes */}
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
+      <Route path="/resume" component={Resume} />
       <Route path="/project/:id" component={ProjectDetail} />
       
       {/* Admin Routes */}
