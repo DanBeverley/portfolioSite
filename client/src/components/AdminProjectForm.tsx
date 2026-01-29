@@ -145,11 +145,11 @@ export function AdminProjectForm({ initialData, onSubmit, isSubmitting }: AdminP
               <div key={field.id} className="flex gap-2 items-start">
                 <FormField
                   control={form.control}
-                  name={`tags.${index}.name`}
+                  name={`tags.${index}.name` as any}
                   render={({ field }) => (
                     <FormItem className="flex-1">
                       <FormControl>
-                        <Input placeholder="Tag Name (e.g. React)" {...field} />
+                        <Input placeholder="Tag Name (e.g. React)" {...field} value={(field.value as string) ?? ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -157,11 +157,11 @@ export function AdminProjectForm({ initialData, onSubmit, isSubmitting }: AdminP
                 />
                 <FormField
                   control={form.control}
-                  name={`tags.${index}.url`}
+                  name={`tags.${index}.url` as any}
                   render={({ field }) => (
                     <FormItem className="flex-[2]">
                       <FormControl>
-                        <Input placeholder="Documentation URL (https://...)" {...field} />
+                        <Input placeholder="Documentation URL (https://...)" {...field} value={(field.value as string) ?? ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

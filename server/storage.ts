@@ -21,14 +21,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createProject(project: InsertProject): Promise<Project> {
-    const [newProject] = await db.insert(projects).values(project).returning();
+    const [newProject] = await db.insert(projects).values({
+      ...project,
+      tags: (project.tags as any) || [],
+    }).returning();
     return newProject;
   }
 
   async updateProject(id: number, updates: Partial<InsertProject>): Promise<Project> {
     const [updated] = await db
       .update(projects)
-      .set(updates)
+      .set({
+        ...updates,
+        tags: (updates.tags as any) || undefined,
+      })
       .where(eq(projects.id, id))
       .returning();
     return updated;

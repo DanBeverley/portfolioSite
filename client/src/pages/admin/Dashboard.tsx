@@ -26,10 +26,9 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!isAuthLoading && !user) {
-      setLocation("/");
       window.location.href = "/api/login";
     }
-  }, [user, isAuthLoading, setLocation]);
+  }, [user, isAuthLoading]);
 
   if (isAuthLoading || !user) {
     return (
@@ -116,7 +115,7 @@ export default function AdminDashboard() {
                       <div className="flex flex-wrap gap-1">
                         {project.tags?.slice(0, 2).map((tag, i) => (
                           <span key={i} className="text-xs bg-secondary px-2 py-0.5 rounded text-secondary-foreground">
-                            {tag}
+                            {typeof tag === 'string' ? tag : tag.name}
                           </span>
                         ))}
                         {(project.tags?.length || 0) > 2 && (
