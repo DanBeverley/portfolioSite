@@ -228,11 +228,18 @@ export default function Home() {
                   <div className="relative pl-6 border-l border-border">
                     <div className="absolute -left-[5px] top-2 w-2 h-2 bg-[#2B6B6D] rounded-full" />
                     <h3 className="font-bold text-lg mb-1">TEDx Speaker on Artificial Intelligence</h3>
-                    <p className="text-sm text-muted-foreground mb-4 font-mono">TEDx Event • High School</p>
-                    <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2 leading-relaxed">
-                      <li>Delivered a comprehensive presentation on the potential and ethics of AI.</li>
-                      <li>Demonstrated strong public speaking and ability to communicate complex concepts to a general audience.</li>
+                    <p className="text-sm text-muted-foreground mb-4 font-mono">TEDx Event • Application of AI in Energy Efficiency</p>
+                    <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2 leading-relaxed mb-4">
+                      <li>Delivered a comprehensive presentation on leveraging Artificial Intelligence to optimize energy efficiency networks.</li>
+                      <li>Demonstrated strong public speaking and the rare ability to articulate complex, backend technical concepts to non-technical audiences.</li>
+                      <li>Highlighted high-level English proficiency and confidence in professional communication.</li>
                     </ul>
+                    <a href="https://youtu.be/SyzMD2hiJg4?si=mk6hLfIuTuwNgfDg" target="_blank" rel="noopener noreferrer">
+                      <Button variant="outline" size="sm" className="rounded-full shadow-sm bg-background border border-border/50 text-foreground hover:bg-muted transition-colors text-xs">
+                        <Play className="w-3 h-3 mr-1.5 fill-current" />
+                        Watch Presentation
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -243,11 +250,12 @@ export default function Home() {
                   <div className="relative pl-6 border-l border-border">
                     <div className="absolute -left-[5px] top-2 w-2 h-2 bg-[#2B6B6D] rounded-full" />
                     <h3 className="font-bold text-lg mb-1">Self-Directed AI & Software Engineering Curriculum</h3>
-                    <p className="text-sm text-muted-foreground mb-4 font-mono">Self-Taught / Open Source</p>
+                    <p className="text-sm text-muted-foreground mb-4 font-mono">2-Year Intensive Auto-Didactic Journey</p>
                     <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2 leading-relaxed">
-                      <li>Completed comprehensive, project-based coursework focusing on Machine Learning and Full-Stack Architecture.</li>
-                      <li>Utilized YouTube, official documentation, and open-source contributions to build mastery.</li>
-                      <li>Professional working proficiency in English, enabling seamless collaboration and clear technical documentation.</li>
+                      <li>Completed rigorous, project-based coursework through Fast.ai, DeepLearning.AI, and Zero To Mastery (ZTM).</li>
+                      <li>Cultivated a deep understanding of machine learning architectures by reading academic research papers and meticulously studying official documentation.</li>
+                      <li>Built practical expertise through continuous iteration of personal engineering projects, transforming theoretical knowledge into deployable full-stack applications.</li>
+                      <li>Maintained a strong emphasis on clear technical writing, ensuring all personal projects have professional-grade English documentation.</li>
                     </ul>
                   </div>
                 </div>
