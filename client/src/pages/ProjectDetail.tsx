@@ -40,7 +40,7 @@ export default function ProjectDetail() {
         transition={{ duration: 0.5 }}
         className="pt-32 px-4 max-w-5xl mx-auto"
       >
-        <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
+        <Link href="/#projects" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Projects
         </Link>
@@ -51,8 +51,8 @@ export default function ProjectDetail() {
 
         <div className="flex flex-wrap gap-3 mb-12">
           {project.tags?.map((tag, i) => (
-            <a 
-              key={i} 
+            <a
+              key={i}
               href={tag.url}
               target="_blank"
               rel="noopener noreferrer"
@@ -65,8 +65,8 @@ export default function ProjectDetail() {
 
         <div className="aspect-video w-full overflow-hidden rounded-xl mb-12 bg-muted shadow-xl">
           {/* Detailed project view image */}
-          <img 
-            src={project.imageUrl} 
+          <img
+            src={project.imageUrl}
             alt={project.title}
             className="w-full h-full object-cover"
           />
@@ -85,7 +85,7 @@ export default function ProjectDetail() {
               <h3 className="font-bold mb-4">Project Links</h3>
               <div className="space-y-3">
                 {project.projectUrl && (
-                  <a 
+                  <a
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -95,9 +95,9 @@ export default function ProjectDetail() {
                     <Globe className="w-4 h-4" />
                   </a>
                 )}
-                
+
                 {project.repoUrl && (
-                  <a 
+                  <a
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"

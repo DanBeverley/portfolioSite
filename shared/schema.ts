@@ -2,8 +2,7 @@ import { pgTable, text, serial, timestamp, varchar, jsonb } from "drizzle-orm/pg
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Export auth models so they are included in migrations
-export * from "./models/auth";
+// Removed auth exports
 
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
@@ -16,9 +15,9 @@ export const projects = pgTable("projects", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertProjectSchema = createInsertSchema(projects).omit({ 
-  id: true, 
-  createdAt: true 
+export const insertProjectSchema = createInsertSchema(projects).omit({
+  id: true,
+  createdAt: true
 });
 
 export type Project = typeof projects.$inferSelect;

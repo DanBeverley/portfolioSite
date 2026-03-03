@@ -1,12 +1,39 @@
 import { Navigation } from "@/components/Navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import {
+  SiPython, SiPytorch, SiReact, SiAmazonwebservices, SiDocker,
+  SiPostgresql, SiTypescript, SiNodedotjs, SiTensorflow, SiFastapi,
+  SiGooglecloud, SiLangchain, SiSqlalchemy, SiCloudflare
+} from "react-icons/si";
+import { Database, Workflow, Hammer } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
+const techStack = [
+  { name: 'Python', icon: SiPython, color: '#3776AB' },
+  { name: 'React', icon: SiReact, color: '#61DAFB' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+  { name: 'AWS', icon: SiAmazonwebservices, color: '#232F3E' },
+  { name: 'GCP', icon: SiGooglecloud, color: '#4285F4' },
+  { name: 'Cloudflare', icon: SiCloudflare, color: '#F38020' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+  { name: 'PyTorch', icon: SiPytorch, color: '#EE4C2C' },
+  { name: 'TensorFlow', icon: SiTensorflow, color: '#FF6F00' },
+  { name: 'FastAPI', icon: SiFastapi, color: '#009688' },
+  { name: 'SQLAlchemy', icon: SiSqlalchemy, color: '#D71F00' },
+  { name: 'LangChain', icon: SiLangchain, color: '#1C3C3C' },
+  { name: 'LangGraph', icon: Workflow, color: '#414141' },
+  { name: 'LangSmith', icon: Hammer, color: '#414141' },
+  { name: 'ChromaDB', icon: Database, color: '#FF6F00' },
+];
 
 export default function About() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main className="pt-32 pb-16 px-4 max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,74 +42,69 @@ export default function About() {
         >
           <div className="flex justify-between items-center mb-12">
             <h1 className="text-4xl md:text-5xl font-display font-bold">About Me</h1>
-            <Button className="button-pop-reverse">
-              Download Resume
-            </Button>
           </div>
-          
+
           <div className="prose prose-lg prose-zinc max-w-none text-muted-foreground">
-            <p className="text-xl leading-relaxed mb-8 text-foreground font-light">
-              I am a passionate AI Engineer with a background in Computer Science and Data Science.
-              My work focuses on bridging the gap between complex machine learning models and 
-              intuitive human-centered applications.
-            </p>
-            
-            <p className="mb-6">
-              With over 5 years of experience in the tech industry, I've worked on projects ranging from
-              computer vision systems for autonomous vehicles to natural language processing interfaces
-              for customer support automation.
-            </p>
-
-            <h3 className="text-foreground mt-12 mb-8 font-bold">Tech Stack</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
-              {[
-                { name: 'Python', icon: 'SiPython' },
-                { name: 'PyTorch', icon: 'SiPytorch' },
-                { name: 'React', icon: 'SiReact' },
-                { name: 'AWS', icon: 'SiAmazonwebservices' },
-                { name: 'Docker', icon: 'SiDocker' },
-                { name: 'PostgreSQL', icon: 'SiPostgresql' },
-                { name: 'TypeScript', icon: 'SiTypescript' },
-                { name: 'Node.js', icon: 'SiNodedotjs' },
-                { name: 'TensorFlow', icon: 'SiTensorflow' },
-                { name: 'FastAPI', icon: 'SiFastapi' }
-              ].map(skill => (
-                <div key={skill.name} className="flex flex-col items-center gap-2 group transition-all duration-300 hover:scale-110">
-                  <div className="w-12 h-12 flex items-center justify-center bg-secondary/50 rounded-xl group-hover:bg-primary/10 transition-colors">
-                    <span className="text-xs font-bold text-primary">{skill.name[0]}</span>
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground">{skill.name}</span>
-                </div>
-              ))}
+            <div className="space-y-6 text-lg leading-relaxed text-foreground font-light mb-8">
+              <p>
+                I am a passionate AI Engineer who always strives for improvements, likes to code, and drinks coffee ;)
+              </p>
+              <p>
+                As a self-directed developer, my journey into Artificial Intelligence has been driven by curiosity and a relentless desire to build. Without traditional academic boundaries, I've had the freedom to dive deep into cutting-edge frameworks, stay ahead of rapid industry shifts, and focus entirely on practical, results-driven engineering.
+              </p>
+              <p>
+                Beyond technical execution, I pride myself on strong English communication skills. I believe that writing clean code is only half the job; the other half is being able to clearly articulate complex AI concepts to teams, clients, and non-technical stakeholders to ensure we are solving the right problems.
+              </p>
             </div>
 
-            <h3 className="text-foreground mt-24 mb-12 font-bold">Experience</h3>
-            <div className="relative border-l border-border ml-3 space-y-12">
-              {[
-                {
-                  role: "Senior AI Engineer",
-                  company: "TechCorp Inc.",
-                  period: "2021 - Present",
-                  description: "Leading the ML infrastructure team and developing generative AI solutions."
-                },
-                {
-                  role: "Machine Learning Engineer",
-                  company: "DataStartups Ltd.",
-                  period: "2019 - 2021",
-                  description: "Built recommendation engines and predictive analytics dashboards."
-                }
-              ].map((exp, i) => (
-                <div key={i} className="relative pl-8">
-                  <div className="absolute -left-[5px] top-2 w-2 h-2 bg-primary rounded-full shadow-[0_0_0_4px_white]" />
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
-                    <h4 className="text-lg font-bold text-foreground">{exp.role}</h4>
-                    <span className="text-sm font-mono text-muted-foreground">{exp.period}</span>
-                  </div>
-                  <p className="text-sm font-medium text-primary mb-2">{exp.company}</p>
-                  <p className="text-base text-muted-foreground">{exp.description}</p>
-                </div>
-              ))}
+            <div className="flex flex-col items-center mt-24 mb-16">
+              <h3 className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-12">S K I L L S</h3>
+
+              <TooltipProvider delayDuration={100}>
+                <motion.div
+                  className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-6 max-w-2xl mx-auto"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.05 }
+                    }
+                  }}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-50px" }}
+                >
+                  {techStack.map(skill => (
+                    <motion.div
+                      key={skill.name}
+                      variants={{
+                        hidden: { opacity: 0, scale: 0.5, y: 20 },
+                        show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 200, damping: 10 } }
+                      }}
+                    >
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div
+                            className="w-16 h-16 rounded-full border border-border bg-background flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-default shadow-sm hover:shadow-md relative group"
+                          >
+                            <div className="absolute inset-1 rounded-full border border-border/50 group-hover:border-primary/20 transition-colors pointer-events-none" />
+                            <skill.icon
+                              className="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity"
+                              style={{ color: skill.color }}
+                            />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent sideOffset={5} className="bg-popover/95 backdrop-blur-sm">
+                          <p className="font-medium text-sm">{skill.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </TooltipProvider>
             </div>
+
+
           </div>
         </motion.div>
       </main>

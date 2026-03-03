@@ -9,65 +9,95 @@
   --font-body: 'Inter', sans-serif;
 
   /* Minimalist Palette */
-  --background: 0 0% 96%;      /* #F5F5F5 - Light Grey */
-  --foreground: 0 0% 7%;       /* #111111 - Soft Black */
-  
-  --card: 0 0% 100%;           /* White */
+  --background: 0 0% 96%;
+  /* #F5F5F5 - Light Grey */
+  --foreground: 0 0% 7%;
+  /* #111111 - Soft Black */
+
+  --card: 0 0% 100%;
+  /* White */
   --card-foreground: 0 0% 7%;
-  
+
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 7%;
-  
-  --primary: 0 0% 7%;          /* Black Primary */
+
+  --primary: 0 0% 7%;
+  /* Black Primary */
   --primary-foreground: 0 0% 98%;
-  
-  --secondary: 0 0% 90%;       /* Light Grey Accents */
+
+  --secondary: 0 0% 90%;
+  /* Light Grey Accents */
   --secondary-foreground: 0 0% 7%;
-  
+
   --muted: 0 0% 90%;
   --muted-foreground: 0 0% 40%;
-  
+
   --accent: 0 0% 85%;
   --accent-foreground: 0 0% 7%;
-  
+
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
 
   --border: 0 0% 88%;
   --input: 0 0% 88%;
   --ring: 0 0% 7%;
-  
-  --radius: 0rem; /* Sharp edges for minimalism */
+
+  --radius: 0rem;
+  /* Sharp edges for minimalism */
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground antialiased font-body selection:bg-black selection:text-white;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display tracking-tight font-bold;
   }
 }
 
-/* Smooth Scrolling */
+/* Smooth Scrolling & Responsive Scaling */
 html {
+  font-size: 126.5%;
   scroll-behavior: smooth;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  transition: width 0.3s ease;
 }
+
+::-webkit-scrollbar:hover {
+  width: 10px;
+}
+
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-300 hover:bg-zinc-400 transition-colors rounded-full;
+  background-color: #d4d4d8;
+  /* zinc-300 */
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  /* padding around thumb */
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1aa;
+  /* zinc-400 */
 }
 
 /* Utility for text reveal animations */
@@ -79,15 +109,17 @@ html {
 .project-card-hover {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .project-card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
 }
 
 /* Custom Button Hover Effect */
 .button-pop-reverse {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .button-pop-reverse:hover {
   transform: translateY(-4px);
   @apply bg-foreground text-background shadow-lg;
@@ -97,6 +129,7 @@ html {
 .tag-pop {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .tag-pop:hover {
   transform: scale(1.1) translateY(-2px);
   @apply shadow-md z-10;

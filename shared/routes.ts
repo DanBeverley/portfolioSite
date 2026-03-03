@@ -34,36 +34,6 @@ export const api = {
         404: errorSchemas.notFound,
       },
     },
-    create: {
-      method: 'POST' as const,
-      path: '/api/projects',
-      input: insertProjectSchema,
-      responses: {
-        201: z.custom<typeof projects.$inferSelect>(),
-        400: errorSchemas.validation,
-        401: errorSchemas.unauthorized,
-      },
-    },
-    update: {
-      method: 'PUT' as const,
-      path: '/api/projects/:id',
-      input: insertProjectSchema.partial(),
-      responses: {
-        200: z.custom<typeof projects.$inferSelect>(),
-        400: errorSchemas.validation,
-        404: errorSchemas.notFound,
-        401: errorSchemas.unauthorized,
-      },
-    },
-    delete: {
-      method: 'DELETE' as const,
-      path: '/api/projects/:id',
-      responses: {
-        204: z.void(),
-        404: errorSchemas.notFound,
-        401: errorSchemas.unauthorized,
-      },
-    },
   },
 };
 
@@ -79,5 +49,4 @@ export function buildUrl(path: string, params?: Record<string, string | number>)
   return url;
 }
 
-export type ProjectInput = z.infer<typeof api.projects.create.input>;
-export type ProjectResponse = z.infer<typeof api.projects.create.responses[201]>;
+export type ProjectResponse = z.infer<typeof api.projects.get.responses[200]>;
