@@ -1,5 +1,21 @@
 [
   {
+    "id": 5,
+    "title": "Neatie",
+    "description": "Neatie is a music discovery and listening app for web and Android. It combines a vinyl-style player with personalized mixes, artist and album discovery, cloud playlists, and synchronized lyrics. In the web player, listeners can also ask an AI assistant about a song and explore playable suggestions.\n\nBoth clients use a shared FastAPI backend for search, recommendations, and playback. A background worker prepares personalized Home feeds, while cached audio and upcoming-track preparation reduce playback delays. The project includes playback diagnostics and automated backend, Flutter, and web-build checks in GitHub Actions.",
+    "imageUrl": "/projects/neatie.png",
+    "projectUrl": "https://neatie.duckdns.org",
+    "repoUrl": "https://github.com/DanBeverley/personal-music-player",
+    "tags": [
+      { "name": "Flutter", "url": "https://flutter.dev/" },
+      { "name": "FastAPI", "url": "https://fastapi.tiangolo.com/" },
+      { "name": "Supabase", "url": "https://supabase.com/" },
+      { "name": "SQLite", "url": "https://sqlite.org/" },
+      { "name": "Docker", "url": "https://www.docker.com/" },
+      { "name": "AWS", "url": "https://aws.amazon.com/" }
+    ]
+  },
+  {
     "id": 4,
     "title": "Quorvix (Data-Insight)",
     "description": "Quorvix is a full-stack, AI-native data science platform designed to automate complex analytical workflows through a multi-agent orchestration architecture. Built on top of LangGraph, it coordinates five distinct AI agents (Brain, Hands, Verifier, Researcher, and Reporter) to execute data profiling, generate code, run sandbox environments, and compile statistical reports autonomously.\r\n\r\nAt its core, the platform features a Hybrid Profiling engine that performs both statistical and semantic analysis across multiple datasets, automatically detecting anomalies, tracking distribution drift, and mapping cross-table 1:N/N:M relationships. To ensure reliability, execution is wrapped in a Quality Control loop where the Verifier agent evaluates sandbox outputs before passing them to the final RAG knowledge system, which persists session-specific embeddings via ChromaDB.\r\n\r\nInfrastructure-wise, Quorvix is highly resilient. It supports intelligent routing for model training, dynamically shifting workloads between Google Cloud Vertex AI or E2B Sandboxes depending on the dataset scale and model complexity. The system also includes deep web-research capabilities for external context gathering, a persistent Neo4j knowledge graph for execution lineage tracking, and a robust FastAPI backend supporting over 15 distinct file formats.",

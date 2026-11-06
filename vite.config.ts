@@ -22,12 +22,13 @@ const projectsSchema = z.array(z.object({
 );
 
 function portfolioHosting(): Plugin {
+  let projects: z.infer<typeof projectsSchema> | null = null;
   return {
     name: "portfolio-hosting",
     config(_, { mode }) {
       const isAmplify = mode === "amplify";
       const projectRoot = import.meta.dirname;
-      const projects = isAmplify
+      projects = isAmplify
         ? projectsSchema.parse(JSON.parse(readFileSync(
           path.join(projectRoot, "portfolio-projects.json"),
           "utf8",
@@ -46,6 +47,17 @@ function portfolioHosting(): Plugin {
           __CONTACT_ENDPOINT__: JSON.stringify(contactEndpoint),
         },
       };
+    },
+    generateBundle: {
+      order: "post",
+      handler(_, bundle) {
+        if (!projects) return;
+        const index = bundle["index.html"];
+        if (!index || index.type !== "asset") this.error("Portfolio entry HTML is missing");
+        for (const { id } of projects) {
+          this.emitFile({ type: "asset", fileName: `project/${id}.html`, source: index.source });
+        }
+      },
     },
   };
 }
