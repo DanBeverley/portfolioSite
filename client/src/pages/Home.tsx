@@ -101,12 +101,12 @@ export default function Home() {
     <div
       ref={containerRef}
       onScroll={handleScroll}
-      className={`snap-y snap-proximity h-screen w-full overflow-y-scroll overflow-x-hidden bg-background scroll-smooth ${isPongPlaying ? 'select-none overflow-hidden' : ''}`}
+      className={`h-dvh w-full overflow-x-hidden bg-background scroll-pt-16 scroll-smooth md:scroll-pt-0 md:snap-y md:snap-proximity ${isPongPlaying ? 'select-none overflow-y-hidden' : 'overflow-y-auto'}`}
     >
       <Navigation isHidden={isPongPlaying} />
 
       {/* Hero Section */}
-      <section id="hero" className="snap-start min-h-screen flex items-center justify-center px-4 relative pt-20">
+      <section id="hero" className="snap-start min-h-svh flex items-center justify-center px-4 relative pt-16 pb-20 md:pt-20 md:pb-0">
         <PingPongGame
           isPlaying={isPongPlaying}
           isPaused={isPongPaused}
@@ -125,7 +125,7 @@ export default function Home() {
               <p className="text-[10px] md:text-xs font-mono tracking-widest text-muted-foreground uppercase mb-6 sm:mb-8">
                 Software Engineering
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-medium text-foreground tracking-tight mb-8 h-[70px] sm:h-[100px] md:h-[140px] flex items-center justify-center">
+              <h1 className="w-full min-h-[105px] md:h-[140px] flex items-center justify-center text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-medium text-foreground tracking-tight mb-4 md:mb-8">
                 <TypeAnimation
                   sequence={[
                     "Hi, my name's Dan (Hòa)",
@@ -140,7 +140,7 @@ export default function Home() {
                   wrapper="span"
                   speed={50}
                   repeat={Infinity}
-                  className="inline-block"
+                  className="inline-block min-w-0 break-words"
                 />
               </h1>
 
@@ -178,7 +178,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="snap-start min-h-screen flex items-center justify-center px-4 relative pt-20">
+      <section id="about" className="snap-start flex items-center justify-center px-4 py-14 md:min-h-screen md:pt-20 md:pb-0">
         <div className="max-w-3xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -188,12 +188,12 @@ export default function Home() {
           >
             <h2 className="text-3xl font-display font-medium text-foreground tracking-tight mb-8 text-center">About Me</h2>
             <div className="prose prose-lg prose-zinc max-w-none text-muted-foreground text-center">
-              <div className="space-y-6 text-lg leading-relaxed text-foreground font-light">
+              <div className="space-y-6 text-base md:text-lg leading-relaxed text-foreground font-light">
                 <p>
                   I’m Hòa, an Information Technology student at Nong Lam University seeking a software engineering internship or junior developer role.
                 </p>
                 <p>
-                  I build backend services with Python and FastAPI, and client applications with Flutter and React. In Neatie, I work on playback and background recommendations. In Quorvix, I connect dataset profiling and analysis workflows to a web interface.
+                  I build backend services with Python and FastAPI, and client applications with Flutter and React. I love building, engineering things and somewhat of a problem solver myself ;). Always hungry for knowledge and willing to learn, to adapt
                 </p>
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* Background */}
-      <section id="experience" className="snap-start scroll-mt-20 px-4 py-16 sm:py-20 bg-secondary/5">
+      <section id="experience" className="snap-start md:scroll-mt-20 px-4 py-14 sm:py-20 bg-secondary/5">
         <div className="max-w-4xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -235,7 +235,7 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="snap-start min-h-screen flex flex-col items-center justify-center px-4 relative pt-20">
+      <section id="skills" className="snap-start flex flex-col items-center justify-center px-4 py-14 md:min-h-screen md:pt-20 md:pb-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -243,7 +243,7 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="w-full max-w-4xl"
         >
-          <h2 className="text-3xl font-display font-medium text-foreground tracking-tight mb-16 text-center">Tech Stack</h2>
+          <h2 className="text-3xl font-display font-medium text-foreground tracking-tight mb-8 md:mb-16 text-center">Tech Stack</h2>
 
           <motion.div
             className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-x-4 gap-y-6"
@@ -279,9 +279,9 @@ export default function Home() {
       </section>
 
       {/* Projects Grid Section */}
-      <section id="projects" className="snap-start min-h-screen flex flex-col justify-center px-4 relative pt-20 bg-secondary/5">
+      <section id="projects" className="snap-start flex flex-col justify-center px-4 py-14 md:min-h-screen md:pt-20 md:pb-0 bg-secondary/5">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="flex justify-between items-end mb-12 border-b border-border pb-4">
+          <div className="flex justify-between items-end mb-6 md:mb-12 border-b border-border pb-4">
             <h2 className="text-sm font-mono uppercase tracking-widest text-muted-foreground">Selected Projects</h2>
             <span className="text-sm font-mono text-muted-foreground">{projects?.length || 0} ITEMS</span>
           </div>
@@ -291,7 +291,7 @@ export default function Home() {
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3">
               {projects?.map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
               ))}
@@ -307,7 +307,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="snap-start min-h-screen flex items-center justify-center px-4 relative pt-20">
+      <section id="contact" className="snap-start flex items-center justify-center px-4 pt-14 pb-24 md:min-h-screen md:pt-20">
         <div className="max-w-2xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -336,7 +336,7 @@ export default function Home() {
           </motion.div>
 
           <div className="max-w-[500px] mx-auto bg-background p-6 md:p-8 rounded-xl border border-border shadow-sm">
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <form className="space-y-4 [&_input]:text-base [&_textarea]:text-base md:[&_input]:text-sm md:[&_textarea]:text-sm" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
                   name="name"
@@ -389,14 +389,14 @@ export default function Home() {
       </section>
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-1.5">
+      <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 md:bottom-6 md:right-6 z-50 flex items-center gap-2">
         {/* Pause Button (Disappears when scrolled past hero) */}
         <AnimatePresence>
-          {!showScrollTop && (
+          {!showScrollTop && !isPongPlaying && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, x: 20 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.5, x: 20 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <Button
@@ -413,7 +413,7 @@ export default function Home() {
         </AnimatePresence>
 
         {/* Dynamic Main Action Button (Play Pong -> Back to Top) */}
-        <div className="relative h-12 w-[114px] flex justify-end">
+        {!isPongPlaying && (
           <AnimatePresence mode="wait">
             {!showScrollTop ? (
               <motion.div
@@ -422,7 +422,6 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0"
               >
                 <Button
                   variant="outline"
@@ -439,20 +438,20 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0"
               >
                 <Button
                   variant="outline"
                   size="icon"
                   className="rounded-full shadow-lg h-12 w-12 bg-background border border-border/50 text-foreground hover:bg-muted disabled:opacity-0 transition-opacity"
                   onClick={scrollToTop}
+                  aria-label="Back to top"
                 >
                   <ArrowUp className="w-5 h-5" />
                 </Button>
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        )}
       </div>
     </div>
   );

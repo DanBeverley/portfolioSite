@@ -32,6 +32,8 @@ interface PingPongGameProps {
     isPaused?: boolean;
 }
 
+const PADDLE_HEIGHT = 80;
+
 export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongGameProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const requestRef = useRef<number>();
@@ -68,7 +70,7 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
 
         // Handle high DPI displays dynamically
         const updateSize = () => {
-            const dpr = window.devicePixelRatio || 1;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
             const rect = canvas.parentElement!.getBoundingClientRect();
 
             canvas.width = rect.width * dpr;
@@ -104,7 +106,6 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
         window.addEventListener('keyup', handleKeyUp);
 
         // Constants
-        const PADDLE_HEIGHT = 80;
         const PADDLE_WIDTH = 8;
         const BALL_SIZE = 8;
         const PADDLE_SPEED = 7;
@@ -130,8 +131,9 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
         // Game Loop
         const draw = () => {
             // Get logical size
-            const width = canvas.width / (window.devicePixelRatio || 1);
-            const height = canvas.height / (window.devicePixelRatio || 1);
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const width = canvas.width / dpr;
+            const height = canvas.height / dpr;
 
             // Clear layout
             ctx.fillStyle = '#f4f4f5'; // light bg
@@ -258,6 +260,15 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
         onClose();
     };
 
+    const moveTouchPaddle = (event: React.PointerEvent<HTMLCanvasElement>) => {
+        if (!isPlaying || event.pointerType === 'mouse') return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        gameState.current.playerY = Math.max(0, Math.min(
+            event.clientY - bounds.top - PADDLE_HEIGHT / 2,
+            bounds.height - PADDLE_HEIGHT,
+        ));
+    };
+
     return (
         <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center pointer-events-none z-50">
             {isPlaying && (
@@ -265,10 +276,10 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
                     className="absolute top-12 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center gap-2 text-4xl sm:text-5xl text-foreground/20 z-20 pointer-events-none select-none drop-shadow-sm"
                     style={{ fontFamily: "'VT323', monospace", letterSpacing: "2px" }}
                 >
-                    <div className="flex gap-16 items-center">
-                        <span className={`w-32 text-right ${score.player > score.ai ? "text-foreground min-w-[3ch]" : ""}`}>{score.player}</span>
+                    <div className="flex gap-6 sm:gap-16 items-center">
+                        <span className={`w-16 sm:w-32 text-right ${score.player > score.ai ? "text-foreground min-w-[3ch]" : ""}`}>{score.player}</span>
                         <span className="text-xl text-border/50 -translate-y-1">|</span>
-                        <span className={`w-32 text-left ${score.ai > score.player ? "text-foreground min-w-[3ch]" : ""}`}>{score.ai}</span>
+                        <span className={`w-16 sm:w-32 text-left ${score.ai > score.player ? "text-foreground min-w-[3ch]" : ""}`}>{score.ai}</span>
                     </div>
                     {highScore > 0 && <span className="text-[1.2rem] text-muted-foreground/40 mt-1">HI: {highScore}</span>}
                 </div>
@@ -277,7 +288,8 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
             {isPlaying && (
                 <button
                     onClick={handleClose}
-                    className="absolute z-30 top-12 left-12 p-2 pointer-events-auto transition-colors group cursor-pointer"
+                    aria-label="Exit Pong"
+                    className="absolute z-30 top-6 left-4 sm:top-12 sm:left-12 p-3 pointer-events-auto transition-colors group cursor-pointer"
                 >
                     <ArrowLeft strokeWidth={1.5} className="w-6 h-6 text-muted-foreground/60 group-hover:text-foreground transition-colors" />
                 </button>
@@ -290,14 +302,22 @@ export function PingPongGame({ onClose, isPlaying, isPaused = false }: PingPongG
                 style={{ opacity: isPlaying ? 1 : 0.15, transition: 'opacity 0.6s ease' }}
             >
                 {isPlaying && (
-                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-xs font-mono text-muted-foreground uppercase tracking-[0.3em] bg-background/80 px-4 py-1 rounded-full backdrop-blur-sm pointer-events-none">
-                        Use UP and DOWN arrows
+                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center text-xs font-mono text-muted-foreground bg-background/80 px-4 py-1 rounded-full backdrop-blur-sm pointer-events-none">
+                        Drag to move · ↑/↓ on keyboard
                     </div>
                 )}
                 <canvas
                     ref={canvasRef}
                     className="w-full h-full block"
-                    style={{ pointerEvents: isPlaying ? 'auto' : 'none' }}
+                    style={{ pointerEvents: isPlaying ? 'auto' : 'none', touchAction: isPlaying ? 'none' : 'auto' }}
+                    onPointerDown={(event) => {
+                        if (!isPlaying || event.pointerType === 'mouse') return;
+                        event.currentTarget.setPointerCapture(event.pointerId);
+                        moveTouchPaddle(event);
+                    }}
+                    onPointerMove={(event) => {
+                        if (event.currentTarget.hasPointerCapture(event.pointerId)) moveTouchPaddle(event);
+                    }}
                 />
             </div>
         </div>
