@@ -193,7 +193,7 @@ export default function Home() {
                   I’m Hòa, an Information Technology student at Nong Lam University seeking a software engineering internship or junior developer role.
                 </p>
                 <p>
-                  I build backend services with Python and FastAPI, and client applications with Flutter and React. In Neatie, I work on playback and background recommendations. In Quorvix, I connect dataset profiling and analysis workflows to a web interface.
+                  I build backend services with Python and FastAPI, and client applications with Flutter and React. I love building and engineering things, and I’m a bit of a problem solver myself ;). I’m always curious, eager to learn, and ready to adapt.
                 </p>
               </div>
             </div>
@@ -291,7 +291,7 @@ export default function Home() {
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3">
               {projects?.map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
               ))}

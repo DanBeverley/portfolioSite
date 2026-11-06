@@ -14,10 +14,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative block h-full"
+      className="group relative block h-full min-w-0"
     >
       <Link href={`/project/${project.id}`} className="block h-full cursor-pointer">
-        <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-4 rounded-sm project-card-hover">
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-3 rounded-sm project-card-hover sm:mb-4">
           {/* Descriptive comment for dynamic image */}
           {/* Dynamic project image from user URL */}
           <img 
@@ -33,13 +33,13 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
         
         <div className="space-y-2">
-          <div className="flex justify-between items-start">
-            <h3 className="text-xl font-display font-bold leading-tight group-hover:underline decoration-1 underline-offset-4">
+          <div className="flex justify-between items-start gap-2">
+            <h3 className="text-base sm:text-xl font-display font-bold leading-tight group-hover:underline decoration-1 underline-offset-4">
               {project.title}
             </h3>
             <span className="text-xs font-mono text-muted-foreground pt-1">0{index + 1}</span>
           </div>
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
             {project.description}
           </p>
           <div className="flex flex-wrap gap-2 pt-2">
