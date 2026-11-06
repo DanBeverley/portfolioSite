@@ -2,18 +2,16 @@ import { useProjects } from "@/hooks/use-projects";
 import { Navigation } from "@/components/Navigation";
 import { ProjectCard } from "@/components/ProjectCard";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Mail, Phone, MapPin, FileDown, Database, Workflow, Hammer, ArrowUp, Play, Pause } from "lucide-react";
+import { Loader2, Mail, Phone, MapPin, FileDown, ArrowUp, Play, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypeAnimation } from "react-type-animation";
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
-  SiPython, SiPytorch, SiReact, SiAmazonwebservices, SiDocker,
-  SiPostgresql, SiTypescript, SiNodedotjs, SiTensorflow, SiFastapi,
-  SiGooglecloud, SiLangchain, SiSqlalchemy, SiCloudflare
+  SiAmazonwebservices, SiDart, SiDocker, SiFastapi, SiFlutter, SiGit,
+  SiGithubactions, SiOpenjdk, SiPostgresql, SiPython, SiReact, SiSqlite, SiTypescript
 } from "react-icons/si";
 import { PingPongGame } from "@/components/PingPongGame";
 
@@ -21,22 +19,18 @@ declare const __CONTACT_ENDPOINT__: string | null;
 
 const techStack = [
   { name: 'Python', icon: SiPython, color: '#3776AB' },
-  { name: 'React', icon: SiReact, color: '#61DAFB' },
+  { name: 'Java', icon: SiOpenjdk, color: '#B66D26' },
   { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
-  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
-  { name: 'AWS', icon: SiAmazonwebservices, color: '#232F3E' },
-  { name: 'GCP', icon: SiGooglecloud, color: '#4285F4' },
-  { name: 'Cloudflare', icon: SiCloudflare, color: '#F38020' },
-  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
-  { name: 'PyTorch', icon: SiPytorch, color: '#EE4C2C' },
-  { name: 'TensorFlow', icon: SiTensorflow, color: '#FF6F00' },
+  { name: 'Dart', icon: SiDart, color: '#0175C2' },
   { name: 'FastAPI', icon: SiFastapi, color: '#009688' },
-  { name: 'SQLAlchemy', icon: SiSqlalchemy, color: '#D71F00' },
-  { name: 'LangChain', icon: SiLangchain, color: '#1C3C3C' },
-  { name: 'LangGraph', icon: Workflow, color: '#414141' },
-  { name: 'LangSmith', icon: Hammer, color: '#414141' },
-  { name: 'ChromaDB', icon: Database, color: '#FF6F00' },
+  { name: 'React', icon: SiReact, color: '#1885A0' },
+  { name: 'Flutter', icon: SiFlutter, color: '#02569B' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+  { name: 'SQLite', icon: SiSqlite, color: '#0F80CC' },
+  { name: 'Git', icon: SiGit, color: '#F05032' },
+  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+  { name: 'GitHub Actions', icon: SiGithubactions, color: '#2088FF' },
+  { name: 'AWS', icon: SiAmazonwebservices, color: '#232F3E' },
 ];
 
 export default function Home() {
@@ -128,8 +122,8 @@ export default function Home() {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center z-10"
             >
-              <p className="text-[10px] md:text-xs font-mono tracking-[0.8em] sm:tracking-[1.2em] text-muted-foreground uppercase mb-6 sm:mb-8 ml-[0.8em] sm:ml-[1.2em]">
-                A I &nbsp;E N G I N E E R
+              <p className="text-[10px] md:text-xs font-mono tracking-widest text-muted-foreground uppercase mb-6 sm:mb-8">
+                Software Engineering
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-medium text-foreground tracking-tight mb-8 h-[70px] sm:h-[100px] md:h-[140px] flex items-center justify-center">
                 <TypeAnimation
@@ -151,16 +145,16 @@ export default function Home() {
               </h1>
 
               <motion.div
-                className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 mt-4 md:mt-8 mb-12"
+                className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 mt-4 md:mt-8 mb-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
                 {[
-                  { label: "ABOUT", href: "#about" },
-                  { label: "EXPERIENCE", href: "#experience" },
+                  { label: "PROJECTS", href: "#projects" },
                   { label: "SKILLS", href: "#skills" },
-                  { label: "PROJECTS", href: "#projects" }
+                  { label: "ABOUT", href: "#about" },
+                  { label: "BACKGROUND", href: "#experience" }
                 ].map((tab) => (
                   <a
                     key={tab.label}
@@ -172,6 +166,12 @@ export default function Home() {
                 ))}
               </motion.div>
 
+              <Button asChild size="lg" className="rounded-full border border-border/60" variant="outline">
+                <a href="/resume.pdf" download="Phan_Ngoc_Hoa_Software_Engineer_CV.pdf">
+                  <FileDown className="w-4 h-4" aria-hidden="true" />
+                  Download CV
+                </a>
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -190,34 +190,19 @@ export default function Home() {
             <div className="prose prose-lg prose-zinc max-w-none text-muted-foreground text-center">
               <div className="space-y-6 text-lg leading-relaxed text-foreground font-light">
                 <p>
-                  I am a passionate AI Engineer who always strives for improvements, likes to code, and drinks coffee ;)
+                  I’m Hòa, an Information Technology student at Nong Lam University seeking a software engineering internship or junior developer role.
                 </p>
                 <p>
-                  As a self-directed developer, my journey into Artificial Intelligence has been driven by curiosity and a relentless desire to build. Without traditional academic boundaries, I've had the freedom to dive deep into cutting-edge frameworks, stay ahead of rapid industry shifts, and focus entirely on practical, results-driven engineering.
-                </p>
-                <p>
-                  Beyond technical execution, I pride myself on strong English communication skills. I believe that writing clean code is only half the job; the other half is being able to clearly articulate complex AI concepts to teams, clients, and non-technical stakeholders to ensure we are solving the right problems.
+                  I build backend services with Python and FastAPI, and client applications with Flutter and React. In Neatie, I work on playback and background recommendations. In Quorvix, I connect dataset profiling and analysis workflows to a web interface.
                 </p>
               </div>
-            </div>
-
-            <div className="flex justify-center mt-12">
-              <Button size="lg" className="rounded-full button-pop-reverse border border-border/60" variant="outline" onClick={() => {
-                const link = document.createElement('a');
-                link.href = '/resume.pdf';
-                link.download = 'Resume.pdf';
-                link.click();
-              }}>
-                <FileDown className="w-4 h-4 mr-2" />
-                Download Resume PDF
-              </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="snap-start min-h-screen flex items-center justify-center px-4 relative pt-20 bg-secondary/5">
+      {/* Background */}
+      <section id="experience" className="snap-start scroll-mt-20 px-4 py-16 sm:py-20 bg-secondary/5">
         <div className="max-w-4xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -225,44 +210,24 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
               <div>
-                <h2 className="text-sm font-mono uppercase tracking-widest text-[#2B6B6D] mb-8 text-center md:text-left">Experience</h2>
-                <div className="space-y-8">
-                  <div className="relative pl-6 border-l border-border">
-                    <div className="absolute -left-[5px] top-2 w-2 h-2 bg-[#2B6B6D] rounded-full" />
-                    <h3 className="font-bold text-lg mb-1">TEDx Speaker on Artificial Intelligence</h3>
-                    <p className="text-sm text-muted-foreground mb-4 font-mono">TEDx Event • Application of AI in Energy Efficiency</p>
-                    <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2 leading-relaxed mb-4">
-                      <li>Delivered a comprehensive presentation on leveraging Artificial Intelligence to optimize energy efficiency networks.</li>
-                      <li>Demonstrated strong public speaking and the rare ability to articulate complex, backend technical concepts to non-technical audiences.</li>
-                      <li>Highlighted high-level English proficiency and confidence in professional communication.</li>
-                    </ul>
-                    <a href="https://youtu.be/SyzMD2hiJg4?si=mk6hLfIuTuwNgfDg" target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" size="sm" className="rounded-full shadow-sm bg-background border border-border/50 text-foreground hover:bg-muted transition-colors text-xs">
-                        <Play className="w-3 h-3 mr-1.5 fill-current" />
-                        Watch Presentation
-                      </Button>
-                    </a>
-                  </div>
-                </div>
+                <h2 className="text-sm font-mono uppercase tracking-widest text-[#2B6B6D] mb-4">Education</h2>
+                <h3 className="font-bold text-lg mb-1">Nong Lam University</h3>
+                <p className="text-sm text-muted-foreground">Undergraduate studies in Information Technology</p>
+                <p className="text-sm text-muted-foreground mt-1">2022 to present · Ho Chi Minh City, Vietnam</p>
               </div>
 
               <div>
-                <h2 className="text-sm font-mono uppercase tracking-widest text-[#2B6B6D] mb-8 text-center md:text-left">Education</h2>
-                <div className="space-y-8">
-                  <div className="relative pl-6 border-l border-border">
-                    <div className="absolute -left-[5px] top-2 w-2 h-2 bg-[#2B6B6D] rounded-full" />
-                    <h3 className="font-bold text-lg mb-1">Self-Directed AI & Software Engineering Curriculum</h3>
-                    <p className="text-sm text-muted-foreground mb-4 font-mono">2-Year Intensive Auto-Didactic Journey</p>
-                    <ul className="list-disc list-inside text-sm text-muted-foreground space-y-2 leading-relaxed">
-                      <li>Completed rigorous, project-based coursework through Fast.ai, DeepLearning.AI, and Zero To Mastery (ZTM).</li>
-                      <li>Cultivated a deep understanding of machine learning architectures by reading academic research papers and meticulously studying official documentation.</li>
-                      <li>Built practical expertise through continuous iteration of personal engineering projects, transforming theoretical knowledge into deployable full-stack applications.</li>
-                      <li>Maintained a strong emphasis on clear technical writing, ensuring all personal projects have professional-grade English documentation.</li>
-                    </ul>
-                  </div>
-                </div>
+                <h2 className="text-sm font-mono uppercase tracking-widest text-[#2B6B6D] mb-4">Public Speaking</h2>
+                <h3 className="font-bold text-lg mb-1">Ensuring Energy-Efficient Networks With AI</h3>
+                <p className="text-sm text-muted-foreground mb-4">Speaker at TEDxYouth@IGCSchoolTBD</p>
+                <Button asChild variant="outline" size="sm" className="rounded-full">
+                  <a href="https://www.youtube.com/watch?v=SyzMD2hiJg4" target="_blank" rel="noopener noreferrer">
+                    <Play className="w-3 h-3" aria-hidden="true" />
+                    Watch the talk
+                  </a>
+                </Button>
               </div>
             </div>
           </motion.div>
@@ -280,49 +245,36 @@ export default function Home() {
         >
           <h2 className="text-3xl font-display font-medium text-foreground tracking-tight mb-16 text-center">Tech Stack</h2>
 
-          <TooltipProvider delayDuration={100}>
-            <motion.div
-              className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center"
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.08, delayChildren: 0.1 }
-                }
-              }}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-50px" }}
-            >
-              {techStack.map(skill => (
-                <motion.div
-                  key={skill.name}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0, y: 30 },
-                    show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 280, damping: 12 } }
-                  }}
-                  whileHover={{ scale: 1.15, rotate: 5, transition: { type: "spring", stiffness: 400, damping: 10 } }}
-                >
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div
-                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-border bg-background flex items-center justify-center shadow-sm cursor-default relative group"
-                      >
-                        <div className="absolute inset-1 rounded-full border border-border/50 group-hover:border-primary/20 transition-colors pointer-events-none" />
-                        <skill.icon
-                          className="w-6 h-6 sm:w-8 sm:h-8 opacity-80 group-hover:opacity-100 transition-opacity"
-                          style={{ color: skill.color }}
-                        />
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent sideOffset={5} className="bg-popover/95 backdrop-blur-sm">
-                      <p className="font-medium text-sm">{skill.name}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </motion.div>
-              ))}
-            </motion.div>
-          </TooltipProvider>
+          <motion.div
+            className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-x-4 gap-y-6"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+              }
+            }}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            {techStack.map(skill => (
+              <motion.div
+                key={skill.name}
+                className="flex flex-col items-center gap-2 text-center"
+                variants={{
+                  hidden: { opacity: 0, scale: 0, y: 30 },
+                  show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 280, damping: 12 } }
+                }}
+                whileHover={{ scale: 1.15, rotate: 5, transition: { type: "spring", stiffness: 400, damping: 10 } }}
+              >
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-border bg-background flex items-center justify-center shadow-sm">
+                  <skill.icon className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: skill.color }} aria-hidden="true" />
+                </div>
+                <span className="text-xs font-medium text-muted-foreground">{skill.name}</span>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
       </section>
 
