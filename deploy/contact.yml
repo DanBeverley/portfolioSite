@@ -1,0 +1,143 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Portfolio contact form for Amplify Hosting
+
+Parameters:
+  ContactInbox:
+    Type: String
+    Description: Email address verified in Amazon SES in this region
+  PortfolioOrigin:
+    Type: String
+    AllowedPattern: 'https://[a-z0-9.-]+\.amplifyapp\.com'
+    Description: Amplify branch URL without a trailing slash
+
+Resources:
+  ContactLimits:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: day
+          AttributeType: S
+      KeySchema:
+        - AttributeName: day
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: expires
+        Enabled: true
+
+  Contact:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      Handler: index.handler
+      Timeout: 10
+      Environment:
+        Variables:
+          CONTACT_INBOX: !Ref ContactInbox
+          PORTFOLIO_ORIGIN: !Ref PortfolioOrigin
+          LIMITS_TABLE: !Ref ContactLimits
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins:
+            - !Ref PortfolioOrigin
+          AllowMethods: [POST]
+          AllowHeaders: [content-type]
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: ses:SendEmail
+              Resource: !Sub 'arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:identity/${ContactInbox}'
+              Condition:
+                ForAllValues:StringEquals:
+                  ses:Recipients: !Ref ContactInbox
+            - Effect: Allow
+              Action: dynamodb:UpdateItem
+              Resource: !GetAtt ContactLimits.Arn
+      InlineCode: |
+        import json
+        import os
+        import re
+        from datetime import datetime, timezone
+
+        import boto3
+        from botocore.exceptions import ClientError
+
+        mail = boto3.client("sesv2")
+        limits = boto3.client("dynamodb")
+
+        def respond(status, message):
+            return {
+                "statusCode": status,
+                "headers": {"content-type": "application/json"},
+                "body": json.dumps({"message": message}),
+            }
+
+        def handler(event, _context):
+            if event.get("requestContext", {}).get("http", {}).get("method") != "POST":
+                return respond(405, "Method not allowed.")
+            headers = event.get("headers") or {}
+            if headers.get("origin") != os.environ["PORTFOLIO_ORIGIN"]:
+                return respond(403, "Origin not allowed.")
+            if not headers.get("content-type", "").lower().startswith("application/json"):
+                return respond(415, "Expected a JSON message.")
+            raw = event.get("body") or ""
+            if event.get("isBase64Encoded") or len(raw.encode("utf-8")) > 24000:
+                return respond(413, "Message is too large.")
+            try:
+                data = json.loads(raw)
+            except (ValueError, RecursionError):
+                return respond(400, "Invalid message.")
+            if not isinstance(data, dict):
+                return respond(400, "Invalid message.")
+
+            fields = {}
+            for field, maximum in (("name", 100), ("email", 254), ("subject", 160), ("message", 4000)):
+                value = data.get(field)
+                if not isinstance(value, str) or not value.strip() or len(value) > maximum:
+                    return respond(400, "Check the form fields and try again.")
+                fields[field] = value.strip()
+            if not re.fullmatch(r"[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+", fields["email"]):
+                return respond(400, "Enter a valid email address.")
+            if "\r" in fields["subject"] or "\n" in fields["subject"]:
+                return respond(400, "Enter a single-line subject.")
+
+            now = datetime.now(timezone.utc)
+            try:
+                limits.update_item(
+                    TableName=os.environ["LIMITS_TABLE"],
+                    Key={"day": {"S": now.date().isoformat()}},
+                    UpdateExpression="SET expires = :expiry ADD #count :one",
+                    ConditionExpression="attribute_not_exists(#count) OR #count < :maximum",
+                    ExpressionAttributeNames={"#count": "count"},
+                    ExpressionAttributeValues={
+                        ":expiry": {"N": str(int(now.timestamp()) + 172800)},
+                        ":one": {"N": "1"},
+                        ":maximum": {"N": "20"},
+                    },
+                )
+                inbox = os.environ["CONTACT_INBOX"]
+                mail.send_email(
+                    FromEmailAddress=inbox,
+                    Destination={"ToAddresses": [inbox]},
+                    ReplyToAddresses=[fields["email"]],
+                    Content={"Simple": {
+                        "Subject": {"Data": "Portfolio: " + fields["subject"], "Charset": "UTF-8"},
+                        "Body": {"Text": {
+                            "Data": "Name: {name}\nEmail: {email}\n\n{message}".format(**fields),
+                            "Charset": "UTF-8",
+                        }},
+                    }},
+                )
+            except ClientError as error:
+                code = error.response["Error"]["Code"]
+                if code == "ConditionalCheckFailedException":
+                    return respond(429, "Daily message limit reached. Please try again tomorrow.")
+                print("Contact service failed:", code)
+                return respond(502, "Message could not be sent.")
+            return respond(200, "Message sent.")
+
+Outputs:
+  ContactEndpoint:
+    Value: !GetAtt ContactUrl.FunctionUrl

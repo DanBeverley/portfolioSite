@@ -1,10 +1,10 @@
-import { Project } from "@shared/schema";
+import type { Project } from "@shared/schema";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 interface ProjectCardProps {
-  project: Project;
+  project: Omit<Project, "createdAt">;
   index: number;
 }
 
