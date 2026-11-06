@@ -1,4 +1,4 @@
-# Dan | AI Engineer Portfolio
+# Hòa Phan | Software Engineering Portfolio
 
 A minimalist, personal portfolio built with React, Tailwind CSS, and Node.js, overall a fun exploring experience. It features a custom-built small neural network-driven Ping Pong game running natively in the browser background.
 See it in action **[here](https://portfoliosite-xe31.onrender.com)** ! 
