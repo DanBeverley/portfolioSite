@@ -17,6 +17,8 @@ import {
 } from "react-icons/si";
 import { PingPongGame } from "@/components/PingPongGame";
 
+declare const __CONTACT_ENDPOINT__: string | null;
+
 const techStack = [
   { name: 'Python', icon: SiPython, color: '#3776AB' },
   { name: 'React', icon: SiReact, color: '#61DAFB' },
@@ -74,13 +76,15 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!__CONTACT_ENDPOINT__) return;
+    const form = e.currentTarget;
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(__CONTACT_ENDPOINT__, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -88,7 +92,7 @@ export default function Home() {
 
       if (response.ok) {
         toast({ title: "Message sent!", description: "I'll get back to you as soon as possible." });
-        (e.target as HTMLFormElement).reset();
+        form.reset();
       } else {
         toast({ variant: "destructive", title: "Failed to send", description: "Please try again later or email me directly." });
       }
@@ -386,6 +390,7 @@ export default function Home() {
                   name="name"
                   type="text"
                   required
+                  maxLength={100}
                   className="w-full px-3 py-2.5 rounded-md border-0 bg-[#E9ECEF]/80 focus:bg-[#E9ECEF] focus:ring-2 focus:ring-[#6EB298]/50 outline-none transition-all placeholder:text-muted-foreground/60 text-sm"
                   placeholder="Name"
                 />
@@ -393,6 +398,7 @@ export default function Home() {
                   name="email"
                   type="email"
                   required
+                  maxLength={254}
                   className="w-full px-3 py-2.5 rounded-md border-0 bg-[#E9ECEF]/80 focus:bg-[#E9ECEF] focus:ring-2 focus:ring-[#6EB298]/50 outline-none transition-all placeholder:text-muted-foreground/60 text-sm"
                   placeholder="Email"
                 />
@@ -401,12 +407,14 @@ export default function Home() {
                 name="subject"
                 type="text"
                 required
+                maxLength={160}
                 className="w-full px-3 py-2.5 rounded-md border-0 bg-[#E9ECEF]/80 focus:bg-[#E9ECEF] focus:ring-2 focus:ring-[#6EB298]/50 outline-none transition-all placeholder:text-muted-foreground/60 text-sm"
                 placeholder="Subject"
               />
               <textarea
                 name="message"
                 required
+                maxLength={4000}
                 rows={4}
                 className="w-full px-3 py-2.5 rounded-md border-0 bg-[#E9ECEF]/80 focus:bg-[#E9ECEF] focus:ring-2 focus:ring-[#6EB298]/50 outline-none transition-all resize-none placeholder:text-muted-foreground/60 text-sm"
                 placeholder="Message"
@@ -414,10 +422,15 @@ export default function Home() {
               <Button
                 type="submit"
                 className="w-full h-10 bg-foreground hover:bg-foreground/90 text-background font-medium tracking-wide rounded-md shadow-sm transition-colors"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !__CONTACT_ENDPOINT__}
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit"}
               </Button>
+              {!__CONTACT_ENDPOINT__ && (
+                <p className="text-sm text-muted-foreground">
+                  The contact form is temporarily unavailable. You can email me directly using the address above.
+                </p>
+              )}
             </form>
           </div>
         </div>

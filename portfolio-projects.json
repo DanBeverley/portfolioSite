@@ -1,0 +1,88 @@
+[
+  {
+    "id": 4,
+    "title": "Quorvix (Data-Insight)",
+    "description": "Quorvix is a full-stack, AI-native data science platform designed to automate complex analytical workflows through a multi-agent orchestration architecture. Built on top of LangGraph, it coordinates five distinct AI agents (Brain, Hands, Verifier, Researcher, and Reporter) to execute data profiling, generate code, run sandbox environments, and compile statistical reports autonomously.\r\n\r\nAt its core, the platform features a Hybrid Profiling engine that performs both statistical and semantic analysis across multiple datasets, automatically detecting anomalies, tracking distribution drift, and mapping cross-table 1:N/N:M relationships. To ensure reliability, execution is wrapped in a Quality Control loop where the Verifier agent evaluates sandbox outputs before passing them to the final RAG knowledge system, which persists session-specific embeddings via ChromaDB.\r\n\r\nInfrastructure-wise, Quorvix is highly resilient. It supports intelligent routing for model training, dynamically shifting workloads between Google Cloud Vertex AI or E2B Sandboxes depending on the dataset scale and model complexity. The system also includes deep web-research capabilities for external context gathering, a persistent Neo4j knowledge graph for execution lineage tracking, and a robust FastAPI backend supporting over 15 distinct file formats.",
+    "imageUrl": "/projects/quorvix.png",
+    "projectUrl": "http://35.184.75.148.nip.io",
+    "repoUrl": "https://github.com/DanBeverley/Data-Insight",
+    "tags": [
+      {
+        "url": "https://www.python.org/",
+        "name": "Python"
+      },
+      {
+        "url": "https://fastapi.tiangolo.com/",
+        "name": "FastAPI"
+      },
+      {
+        "url": "https://langchain-ai.github.io/langgraph/",
+        "name": "LangGraph"
+      },
+      {
+        "url": "https://python.langchain.com/",
+        "name": "LangChain"
+      },
+      {
+        "url": "https://deepmind.google/technologies/gemini/",
+        "name": "Google Gemini"
+      },
+      {
+        "url": "https://ollama.com/",
+        "name": "Ollama"
+      },
+      {
+        "url": "https://react.dev/",
+        "name": "React 18"
+      },
+      {
+        "url": "https://www.typescriptlang.org/",
+        "name": "TypeScript"
+      },
+      {
+        "url": "https://tailwindcss.com/",
+        "name": "Tailwind CSS"
+      },
+      {
+        "url": "https://ui.shadcn.com/",
+        "name": "Shadcn/UI"
+      },
+      {
+        "url": "https://www.postgresql.org/",
+        "name": "PostgreSQL"
+      },
+      {
+        "url": "https://www.sqlalchemy.org/",
+        "name": "SQLAlchemy"
+      },
+      {
+        "url": "https://neo4j.com/",
+        "name": "Neo4j"
+      },
+      {
+        "url": "https://www.trychroma.com/",
+        "name": "ChromaDB"
+      },
+      {
+        "url": "https://apscheduler.readthedocs.io/",
+        "name": "APscheduler"
+      },
+      {
+        "url": "https://www.cloudflare.com/developer-platform/r2/",
+        "name": "Cloudflare R2"
+      },
+      {
+        "url": "https://cloud.google.com/vertex-ai",
+        "name": "GCP Vertex AI"
+      },
+      {
+        "url": "https://e2b.dev/",
+        "name": "E2B Sandbox"
+      },
+      {
+        "url": "https://www.langchain.com/langsmith",
+        "name": "LangSmith"
+      }
+    ]
+  }
+]
